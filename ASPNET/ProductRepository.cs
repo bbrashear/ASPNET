@@ -25,7 +25,7 @@ namespace ASPNET.Models
         }
         public void UpdateProduct(Product product)
         {
-            _conn.Execute("UPDATE products SET Name = @name, Price = @Price WHERE ProductID = @id",
+            _conn.Execute("UPDATE products SET Name = @name, Price = @price WHERE ProductID = @id;",
                 new { name = product.Name, price = product.Price, id = product.ProductID });
         }
         public void InsertProduct(Product productToInsert)
@@ -35,7 +35,7 @@ namespace ASPNET.Models
         }
         public IEnumerable<Category> GetCategories()
         {
-            return _conn.Query<Category>("SELECT * FROM categories");
+            return _conn.Query<Category>("SELECT * FROM categories;");
         }
         public Product AssignCategory()
         {
@@ -44,6 +44,12 @@ namespace ASPNET.Models
             product.Categories = categoryList;
 
             return product;
+        }
+        public void DeleteProduct(Product product)
+        {
+            _conn.Execute("DELETE FROM reviews WHERE ProductID = @id;", new { id = product.ProductID });
+            _conn.Execute("DELETE FROM sales WHERE ProductID = @id;", new { id = product.ProductID });
+            _conn.Execute("DELETE FROM products WHERE ProductID = @id;", new { id = product.ProductID });
         }
     }
 }
