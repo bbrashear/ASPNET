@@ -11,6 +11,7 @@ namespace ASPNET.Models
     {
         private readonly IDbConnection _conn;
 
+        //Gets connection from startup file
         public ProductRepository(IDbConnection conn)
         {
             _conn = conn;

@@ -27,9 +27,9 @@ namespace ASPNET.Controllers
             var product = repo.GetProduct(id);
             return View(product);
         }
-        public IActionResult UpdateProduct(int id)
+        public IActionResult UpdateProduct(Product product)
         {
-            Product prod = repo.GetProduct(id);
+            Product prod = repo.GetProduct(product.ProductID);
             repo.UpdateProduct(prod);
             if(prod == null)
             {

@@ -21,15 +21,19 @@
     </tr>
 </table>
 
-<div style="display : block">
-    <a href="/Product/UpdateProduct/@Model.ProductID">Update this Product</a>
+<div style="padding:4px 4px 4px 0px;">
+    @using (Html.BeginForm("UpdateProduct", "Product", "Post"))
+    {
+        <input type="hidden" asp-for="ProductID" value="@Model.ProductID" />
+        <input type="submit" class="btn btn-primary" value="Update Product" />
+    }
 </div>
 
-<div style="display : block">
+<div>
     @using(Html.BeginForm("DeleteProduct", "Product", "Post"))
     {
         <input type="hidden" asp-for="ProductID" value="@Model.ProductID"/>
-        <input type="submit" onclick="return confirm('Are you sure you want to delete?')" value="Delete this product"/>
+        <input type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')" value="Delete Product"/>
     }
 </div>
 
