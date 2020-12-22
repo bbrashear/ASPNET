@@ -16,29 +16,29 @@ namespace ASPNET.Models
         {
             _conn = conn;
         }
-        public IEnumerable<Product> GetAllProducts()
+        public IEnumerable<Product> GetAllProducts() //gets all products from database
         {
             return _conn.Query<Product>("SELECT * FROM products;");
         }
-        public Product GetProduct(int id)
+        public Product GetProduct(int id) //gets a specific product from the database
         {
-            return (Product)_conn.QuerySingle<Product>("SELECT * FROM products WHERE ProductID = @id", new { id = id });
+            return _conn.QuerySingle<Product>("SELECT * FROM products WHERE ProductID = @id", new { id = id });
         }
-        public void UpdateProduct(Product product)
+        public void UpdateProduct(Product product) //updates the properties of a product to the database
         {
             _conn.Execute("UPDATE products SET Name = @name, Price = @price WHERE ProductID = @id;",
                 new { name = product.Name, price = product.Price, id = product.ProductID });
         }
-        public void InsertProduct(Product productToInsert)
+        public void InsertProduct(Product productToInsert) //inserts a new product into the database
         {
             _conn.Execute("INSERT INTO products (Name, Price, CategoryID) VALUES (@name, @price, @categoryID);",
                 new { name = productToInsert.Name, price = productToInsert.Price, categoryID = productToInsert.CategoryID });
         }
-        public IEnumerable<Category> GetCategories()
+        public IEnumerable<Category> GetCategories() //gets all categories from database
         {
             return _conn.Query<Category>("SELECT * FROM categories;");
         }
-        public Product AssignCategory()
+        public Product AssignCategory() //gets categories, instantiates new product, sets Categories property to list of categories
         {
             var categoryList = GetCategories();
             var product = new Product();
@@ -46,7 +46,7 @@ namespace ASPNET.Models
 
             return product;
         }
-        public void DeleteProduct(Product product)
+        public void DeleteProduct(Product product) //deletes product from database
         {
             _conn.Execute("DELETE FROM reviews WHERE ProductID = @id;", new { id = product.ProductID });
             _conn.Execute("DELETE FROM sales WHERE ProductID = @id;", new { id = product.ProductID });
